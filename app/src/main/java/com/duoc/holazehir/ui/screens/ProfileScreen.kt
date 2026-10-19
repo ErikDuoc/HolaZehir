@@ -1,15 +1,13 @@
 package com.duoc.holazehir.ui.screens
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.duoc.holazehir.navigation.Screen
+import com.duoc.holazehir.ui.components.AppNavigationBar
 import com.duoc.holazehir.viewmodel.MainViewModel
 
 @Composable
@@ -17,29 +15,13 @@ fun ProfileScreen(
     navController: NavController,
     viewModel: MainViewModel
 ) {
-    val items = listOf(Screen.Home, Screen.Profile)
-    var selectedItem by remember { mutableStateOf(1) }
-
     Scaffold(
         bottomBar = {
-            NavigationBar {
-                items.forEachIndexed { index, screen ->
-                    NavigationBarItem(
-                        selected = selectedItem == index,
-                        onClick = {
-                            selectedItem = index
-                            viewModel.navigateTo(screen)
-                        },
-                        label = { Text(text = screen.route) },
-                        icon = {
-                            Icon(
-                                imageVector = if (screen == Screen.Home) Icons.Default.Home else Icons.Default.Person,
-                                contentDescription = screen.route
-                            )
-                        }
-                    )
-                }
-            }
+            AppNavigationBar(
+                currentScreen = Screen.Profile,
+                onScreenSelected = { screen -> viewModel.navigateTo(screen) },
+                items = listOf(Screen.Home, Screen.Profile)
+            )
         }
     ) { innerPadding ->
         Column(
