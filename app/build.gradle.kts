@@ -69,4 +69,8 @@ dependencies {
     // Herramientas de Depuración
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    //Para formulario
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+
 }

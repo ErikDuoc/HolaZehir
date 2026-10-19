@@ -15,11 +15,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.duoc.holazehir.navigation.NavigationEvent
 import com.duoc.holazehir.navigation.Screen
+import com.duoc.holazehir.ui.screens.LandingScreen
 import com.duoc.holazehir.ui.screens.HomeScreen
 import com.duoc.holazehir.ui.screens.ProfileScreen
 import com.duoc.holazehir.ui.screens.SettingsScreen
 import com.duoc.holazehir.ui.theme.MiAppTheme
-import com.duoc.holazehir.viewModels.MainViewModel
+import com.duoc.holazehir.viewmodel.MainViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,9 +59,12 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = Screen.Home.route,
+                        startDestination = Screen.Landing.route,
                         modifier = Modifier.padding(paddingValues = innerPadding)
                     ) {
+                        composable(route = Screen.Landing.route) {
+                            LandingScreen(navController = navController, viewModel = viewModel)
+                        }
                         composable(route = Screen.Home.route) {
                             HomeScreen(navController = navController, viewModel = viewModel)
                         }

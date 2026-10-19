@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.duoc.holazehir.navigation.Screen
-import com.duoc.holazehir.viewModels.MainViewModel
+import com.duoc.holazehir.viewmodel.MainViewModel
 
 @Composable
 fun ProfileScreen(

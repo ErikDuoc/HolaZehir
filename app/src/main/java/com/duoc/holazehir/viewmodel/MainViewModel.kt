@@ -1,4 +1,4 @@
-package com.duoc.holazehir.viewModels
+package com.duoc.holazehir.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
