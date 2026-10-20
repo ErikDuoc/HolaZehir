@@ -1,5 +1,9 @@
 package com.duoc.holazehir.navigation
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -52,14 +56,42 @@ fun AppNavigation() {
             }
         }
 
-        // Layout base con NavHost
+        // Layout base con NavHost y transiciones animadas
         Scaffold(
             modifier = Modifier.fillMaxSize()
         ) { innerPadding ->
             NavHost(
                 navController = navController,
                 startDestination = Screen.Landing.route,
-                modifier = Modifier.padding(paddingValues = innerPadding)
+                modifier = Modifier.padding(paddingValues = innerPadding),
+                // 1. Animación al ENTRAR a una pantalla nueva (se desplaza de derecha a izquierda)
+                enterTransition = {
+                    slideIntoContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                        animationSpec = tween(400)
+                    ) + fadeIn(animationSpec = tween(400))
+                },
+                // 2. Animación de la pantalla que SALE (se desvanece suavemente hacia la izquierda)
+                exitTransition = {
+                    slideOutOfContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                        animationSpec = tween(400)
+                    ) + fadeOut(animationSpec = tween(400))
+                },
+                // 3. Animación al VOLVER ATRÁS (la pantalla anterior entra desplazándose de izquierda a derecha)
+                popEnterTransition = {
+                    slideIntoContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                        animationSpec = tween(400)
+                    ) + fadeIn(animationSpec = tween(400))
+                },
+                // 4. Animación de la pantalla actual al VOLVER ATRÁS (sale hacia la derecha)
+                popExitTransition = {
+                    slideOutOfContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                        animationSpec = tween(400)
+                    ) + fadeOut(animationSpec = tween(400))
+                }
             ) {
                 composable(route = Screen.Landing.route) {
                     LandingScreen(navController = navController, viewModel = viewModel)
