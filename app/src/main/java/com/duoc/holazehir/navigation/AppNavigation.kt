@@ -16,6 +16,7 @@ import com.duoc.holazehir.ui.screens.ProfileScreen
 import com.duoc.holazehir.ui.screens.RegistroScreen
 import com.duoc.holazehir.ui.screens.ResumenScreen
 import com.duoc.holazehir.ui.screens.SettingsScreen
+import com.duoc.holazehir.ui.screens.TutorialScreen
 import com.duoc.holazehir.ui.theme.MiAppTheme
 import com.duoc.holazehir.viewmodel.MainViewModel
 import com.duoc.holazehir.viewmodel.UsuarioViewModel
@@ -74,7 +75,10 @@ fun AppNavigation() {
                     RegistroScreen(navController = navController, viewModel = usuarioViewModel)
                 }
                 composable(route = Screen.Resumen.route) {
-                    ResumenScreen(viewModel = usuarioViewModel)
+                    ResumenScreen(usuarioViewModel = usuarioViewModel, mainViewModel = viewModel)
+                }
+                composable(route = Screen.Tutorial.route) {
+                    TutorialScreen(navController = navController, viewModel = viewModel)
                 }
             }
         }

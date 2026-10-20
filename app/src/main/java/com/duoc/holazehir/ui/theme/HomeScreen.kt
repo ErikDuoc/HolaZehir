@@ -23,7 +23,7 @@ import androidx.compose.ui.Alignment
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreenDeprecado() {
     // Scaffold proporciona la estructura visual básica de Material Design (TopBar, Snackbar, etc.)
     Scaffold(
         topBar = {
@@ -127,5 +127,5 @@ fun HomeScreen() {
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreenDeprecado()
 }

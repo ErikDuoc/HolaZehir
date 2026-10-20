@@ -21,22 +21,14 @@ fun LandingScreen(
     navController: NavController,
     viewModel: MainViewModel
 ) {
-    Scaffold(
-        bottomBar = {
-            AppNavigationBar(
-                currentScreen = Screen.Landing,
-                onScreenSelected = { screen -> viewModel.navigateTo(screen) },
-                items = listOf(Screen.Home, Screen.Landing)
-            )
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(paddingValues = innerPadding)
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "Logo de la Aplicación",
@@ -47,17 +39,16 @@ fun LandingScreen(
             )
             Text(text = "¡Bienvenido | Hoş geldin!")
             Button(
-                onClick = { viewModel.navigateTo(Screen.Home) },
+                onClick = { viewModel.navigateTo(Screen.Registro) },
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
                 )
             ) {
                 Text(
-                    text = "Ingresar ",
+                    text = "Registrarse",
                     style = MaterialTheme.typography.labelLarge
                 )
             }
         }
-    }
 }
