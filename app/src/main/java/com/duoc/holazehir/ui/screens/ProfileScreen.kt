@@ -10,16 +10,28 @@ import com.duoc.holazehir.navigation.Screen
 import com.duoc.holazehir.ui.components.AppNavigationBar
 import com.duoc.holazehir.viewmodel.MainViewModel
 
+import androidx.compose.ui.tooling.preview.Preview
+import com.duoc.holazehir.ui.theme.MiAppTheme
+
 @Composable
 fun ProfileScreen(
     navController: NavController,
     viewModel: MainViewModel
 ) {
+    ProfileScreenContent(
+        onScreenSelected = { screen -> viewModel.navigateTo(screen) }
+    )
+}
+
+@Composable
+fun ProfileScreenContent(
+    onScreenSelected: (Screen) -> Unit
+) {
     Scaffold(
         bottomBar = {
             AppNavigationBar(
                 currentScreen = Screen.Profile,
-                onScreenSelected = { screen -> viewModel.navigateTo(screen) },
+                onScreenSelected = onScreenSelected,
                 items = listOf(Screen.Home, Screen.Profile)
             )
         }
@@ -33,5 +45,15 @@ fun ProfileScreen(
         ) {
             Text(text = "¡Bienvenido al Perfil!")
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ProfileScreenPreview() {
+    MiAppTheme {
+        ProfileScreenContent(
+            onScreenSelected = {}
+        )
     }
 }

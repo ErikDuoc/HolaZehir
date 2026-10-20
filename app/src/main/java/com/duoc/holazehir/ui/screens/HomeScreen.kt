@@ -13,21 +13,46 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.duoc.holazehir.navigation.Screen
 import com.duoc.holazehir.ui.components.AppNavigationBar
+import com.duoc.holazehir.ui.theme.MiAppTheme
 import com.duoc.holazehir.viewmodel.MainViewModel
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.res.painterResource
+import com.duoc.holazehir.R
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun HomeScreen(
     navController: NavController,
     viewModel: MainViewModel
 ) {
+    HomeScreenContent(
+        onScreenSelected = { screen -> viewModel.navigateTo(screen) }
+    )
+}
+
+@Composable
+fun HomeScreenContent(
+    onScreenSelected: (Screen) -> Unit
+) {
     Scaffold(
+        containerColor = Color(0xFF853FAC),
         bottomBar = {
             AppNavigationBar(
                 currentScreen = Screen.Home,
-                onScreenSelected = { screen -> viewModel.navigateTo(screen) }
+                onScreenSelected = onScreenSelected,
+                items = listOf(Screen.Home, Screen.Profile)
             )
         }
     ) { innerPadding ->
@@ -38,11 +63,47 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "¡Bienvenido a la Página de Inicio!")
+            Text(
+                text = "Nivel 1: Objetos en Turco",
+                color = Color.White,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
             Spacer(modifier = Modifier.height(height = 16.dp))
-            Button(onClick = { viewModel.navigateTo(Screen.Tutorial) }) {
-                Text(text = "Ir a aprender")
+            Image(
+                painter = painterResource(id = R.drawable.lesson1),
+                contentDescription = "Lección 1",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        onScreenSelected(Screen.Tutorial)
+                        println("¡Hiciste clic en la imagen!")
+                    }
+            )
+            Spacer(modifier = Modifier.height(height = 16.dp))
+            Button(
+                onClick = { onScreenSelected(Screen.Tutorial) },
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White
+                ),
+                contentPadding = PaddingValues(vertical = 20.dp, horizontal = 40.dp)
+
+            ) {
+                Text(
+                    text = "Iniciar Llección 1",
+                    color = MaterialTheme.colorScheme.primary)
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenPreview() {
+    MiAppTheme {
+        HomeScreenContent(
+            onScreenSelected = {}
+        )
     }
 }

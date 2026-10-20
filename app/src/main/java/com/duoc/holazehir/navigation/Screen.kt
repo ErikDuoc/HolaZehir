@@ -1,7 +1,7 @@
 package com.duoc.holazehir.navigation
 
 // Sealed class para definir rutas tipo-safe en la navegación
-sealed class Screen(val route: String, name: String? = null) {
+sealed class Screen(val route: String, val name: String? = null) {
 
     // Rutas simples (sin argumentos): Usamos 'data object'
     data object Home : Screen(route = "home_page", name = "Inicio")
