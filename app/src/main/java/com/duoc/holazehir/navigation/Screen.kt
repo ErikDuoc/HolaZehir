@@ -6,9 +6,10 @@ sealed class Screen(val route: String) {
     // Rutas simples (sin argumentos): Usamos 'data object'
     data object Home : Screen(route = "home_page")
     data object Profile : Screen(route = "profile_page")
-
     data object Landing : Screen(route = "landing_page")
     data object Settings : Screen(route = "settings_page")
+    data object Registro : Screen(route = "registro")
+    data object Resumen : Screen(route = "resumen")
 
     // Ejemplo de una ruta con argumentos (Opcional)
     data class Detail(val itemId: String) : Screen(route = "detail_page/$itemId") {
