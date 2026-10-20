@@ -19,6 +19,7 @@ import com.duoc.holazehir.ui.screens.SettingsScreen
 import com.duoc.holazehir.ui.screens.TutorialScreen
 import com.duoc.holazehir.ui.theme.MiAppTheme
 import com.duoc.holazehir.viewmodel.MainViewModel
+import com.duoc.holazehir.viewmodel.TutorialViewModel
 import com.duoc.holazehir.viewmodel.UsuarioViewModel
 import kotlinx.coroutines.flow.collectLatest
 
@@ -27,6 +28,7 @@ fun AppNavigation() {
     MiAppTheme {
         val viewModel: MainViewModel = viewModel()
         val usuarioViewModel: UsuarioViewModel = viewModel()
+        val tutorialViewModel: TutorialViewModel = viewModel()
         val navController = rememberNavController()
 
         // Escuchar eventos de navegación centralizados de MainViewModel
@@ -78,7 +80,11 @@ fun AppNavigation() {
                     ResumenScreen(usuarioViewModel = usuarioViewModel, mainViewModel = viewModel)
                 }
                 composable(route = Screen.Tutorial.route) {
-                    TutorialScreen(navController = navController, viewModel = viewModel)
+                    TutorialScreen(
+                        navController = navController,
+                        viewModel = viewModel,
+                        tutorialViewModel = tutorialViewModel
+                    )
                 }
             }
         }
