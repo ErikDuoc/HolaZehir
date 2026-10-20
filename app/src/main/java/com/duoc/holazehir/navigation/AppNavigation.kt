@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.duoc.holazehir.ui.screens.HomeScreen
 import com.duoc.holazehir.ui.screens.LandingScreen
+import com.duoc.holazehir.ui.screens.PantallaEstado
 import com.duoc.holazehir.ui.screens.ProfileScreen
 import com.duoc.holazehir.ui.screens.RegistroScreen
 import com.duoc.holazehir.ui.screens.ResumenScreen
@@ -75,6 +76,9 @@ fun AppNavigation() {
                 }
                 composable(route = Screen.Resumen.route) {
                     ResumenScreen(viewModel = usuarioViewModel)
+                }
+                composable(route = Screen.Estado.route) {
+                    PantallaEstado()
                 }
             }
         }

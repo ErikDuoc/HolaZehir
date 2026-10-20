@@ -40,6 +40,14 @@ fun HomeScreen(
                         viewModel.navigateTo(Screen.Profile)
                     }
                 )
+                NavigationDrawerItem(
+                    label = { Text(text = "Modo Especial") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        viewModel.navigateTo(Screen.Estado)
+                    }
+                )
             }
         }
     ) {
@@ -69,6 +77,9 @@ fun HomeScreen(
                 Button(onClick = { viewModel.navigateTo(Screen.Settings) }) {
                     Text(text = "Ir a Configuración")
                 }
+                Spacer(modifier = Modifier.height(height = 16.dp))
+                Button(onClick = { viewModel.navigateTo(Screen.Estado) }) {}
+                Text(text = "Modo Especial")
             }
         }
     }
