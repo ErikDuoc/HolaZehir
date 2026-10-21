@@ -2,12 +2,15 @@ package com.duoc.holazehir.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
@@ -18,15 +21,21 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.duoc.holazehir.viewmodel.UsuarioViewModel
 
 @Composable
 fun RegistroScreen(
-    navController: NavController,
-    viewModel: UsuarioViewModel
+    navController: NavController = rememberNavController(),
+    viewModel: UsuarioViewModel = viewModel()
 ) {
     val estado by viewModel.estado.collectAsState()
 
@@ -36,6 +45,14 @@ fun RegistroScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = "¡Suscríbete!",
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
         // Campo nombre
         OutlinedTextField(
             value = estado.nombre,
@@ -79,20 +96,6 @@ fun RegistroScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        // Campo direccion
-        OutlinedTextField(
-            value = estado.direccion,
-            onValueChange = viewModel::onDireccionChange,
-            label = { Text("Dirección") },
-            isError = estado.errores.direccion != null,
-            supportingText = {
-                estado.errores.direccion?.let {
-                    Text(text = it, color = MaterialTheme.colorScheme.error)
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
-
         // Checkbox: aceptar términos
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -112,9 +115,21 @@ fun RegistroScreen(
                     navController.navigate("resumen")
                 }
             },
-            modifier = Modifier.fillMaxWidth()
+            shape = RoundedCornerShape(12.dp),
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(vertical = 20.dp)
         ) {
-            Text("Registrar")
+            Text(
+                text = "Crear cuenta",
+                style = MaterialTheme.typography.labelLarge,
+                fontSize = 18.sp
+            )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RegistroScreenPreview() {
+    RegistroScreen()
 }

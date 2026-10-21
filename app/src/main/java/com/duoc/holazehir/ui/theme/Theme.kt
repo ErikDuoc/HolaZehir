@@ -20,7 +20,7 @@ private val LightColorScheme = lightColorScheme()
 fun MiAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color está disponible en Android 12+ (API 31+)
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

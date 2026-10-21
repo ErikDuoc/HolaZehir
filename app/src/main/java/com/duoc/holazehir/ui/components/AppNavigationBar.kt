@@ -25,7 +25,7 @@ fun AppNavigationBar(
             NavigationBarItem(
                 selected = selected,
                 onClick = { onScreenSelected(screen) },
-                label = { Text(text = screen.route) },
+                label = { screen.name?.let { Text(text = it) } },
                 icon = {
                     val icon = when (screen) {
                         Screen.Home -> Icons.Default.Home
