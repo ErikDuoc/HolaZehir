@@ -30,6 +30,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.duoc.holazehir.model.UsuarioUiState
+import com.duoc.holazehir.navigation.Screen
+import com.duoc.holazehir.ui.theme.MiAppTheme
 import com.duoc.holazehir.viewmodel.UsuarioViewModel
 
 @Composable
@@ -39,6 +42,33 @@ fun RegistroScreen(
 ) {
     val estado by viewModel.estado.collectAsState()
 
+    RegistroScreenContent(
+        estado = estado,
+        onNombreChange = viewModel::onNombreChange,
+        onCorreoChange = viewModel::onCorreoChange,
+        onClaveChange = viewModel::onClaveChange,
+        onAceptarTerminosChange = viewModel::onAceptarTerminosChange,
+        onSubmit = {
+            if (viewModel.validarFormulario()) {
+                navController.navigate(Screen.Home.route) {
+                    popUpTo(Screen.Landing.route) {
+                        inclusive = true
+                    }
+                }
+            }
+        }
+    )
+}
+
+@Composable
+fun RegistroScreenContent(
+    estado: UsuarioUiState,
+    onNombreChange: (String) -> Unit,
+    onCorreoChange: (String) -> Unit,
+    onClaveChange: (String) -> Unit,
+    onAceptarTerminosChange: (Boolean) -> Unit,
+    onSubmit: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -56,7 +86,7 @@ fun RegistroScreen(
         // Campo nombre
         OutlinedTextField(
             value = estado.nombre,
-            onValueChange = viewModel::onNombreChange,
+            onValueChange = onNombreChange,
             label = { Text("Nombre") },
             isError = estado.errores.nombre != null,
             supportingText = {
@@ -70,7 +100,7 @@ fun RegistroScreen(
         // Campo correo
         OutlinedTextField(
             value = estado.correo,
-            onValueChange = viewModel::onCorreoChange,
+            onValueChange = onCorreoChange,
             label = { Text("Correo electrónico") },
             isError = estado.errores.correo != null,
             supportingText = {
@@ -84,7 +114,7 @@ fun RegistroScreen(
         // Campo clave
         OutlinedTextField(
             value = estado.clave,
-            onValueChange = viewModel::onClaveChange,
+            onValueChange = onClaveChange,
             label = { Text("Contraseña") },
             visualTransformation = PasswordVisualTransformation(),
             isError = estado.errores.clave != null,
@@ -102,7 +132,7 @@ fun RegistroScreen(
         ) {
             Checkbox(
                 checked = estado.aceptaTerminos,
-                onCheckedChange = viewModel::onAceptarTerminosChange
+                onCheckedChange = onAceptarTerminosChange
             )
             Spacer(Modifier.width(8.dp))
             Text("Acepto los términos y condiciones")
@@ -110,11 +140,7 @@ fun RegistroScreen(
 
         // Botón enviar
         Button(
-            onClick = {
-                if (viewModel.validarFormulario()) {
-                    navController.navigate("resumen")
-                }
-            },
+            onClick = onSubmit,
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(vertical = 20.dp)
@@ -131,5 +157,14 @@ fun RegistroScreen(
 @Preview(showBackground = true)
 @Composable
 fun RegistroScreenPreview() {
-    RegistroScreen()
+    MiAppTheme {
+        RegistroScreenContent(
+            estado = UsuarioUiState(nombre = "Juan", correo = "juan@example.com", aceptaTerminos = true),
+            onNombreChange = {},
+            onCorreoChange = {},
+            onClaveChange = {},
+            onAceptarTerminosChange = {},
+            onSubmit = {}
+        )
+    }
 }

@@ -9,11 +9,8 @@ sealed class Screen(val route: String, val name: String? = null) {
     data object Landing : Screen(route = "landing_page", name = "Landing")
     data object Settings : Screen(route = "settings_page", name = "Configuración")
     data object Registro : Screen(route = "registro", name = "Registro")
-    data object Resumen : Screen(route = "resumen", name = "Resumen registro")
 
     data object Tutorial : Screen(route = "tutorial_page", name = "Tutorial")
-
-    data object Estado : Screen(route = "estado")
 
     // Ejemplo de una ruta con argumentos (Opcional)
     data class Detail(val itemId: String) : Screen(route = "detail_page/$itemId") {

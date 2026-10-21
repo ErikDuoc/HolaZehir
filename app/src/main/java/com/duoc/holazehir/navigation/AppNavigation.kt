@@ -4,11 +4,16 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -16,10 +21,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.duoc.holazehir.ui.screens.HomeScreen
 import com.duoc.holazehir.ui.screens.LandingScreen
-import com.duoc.holazehir.ui.screens.PantallaEstado
 import com.duoc.holazehir.ui.screens.ProfileScreen
 import com.duoc.holazehir.ui.screens.RegistroScreen
-import com.duoc.holazehir.ui.screens.ResumenScreen
 import com.duoc.holazehir.ui.screens.SettingsScreen
 import com.duoc.holazehir.ui.screens.TutorialScreen
 import com.duoc.holazehir.ui.theme.MiAppTheme
@@ -35,6 +38,9 @@ fun AppNavigation() {
         val usuarioViewModel: UsuarioViewModel = viewModel()
         val tutorialViewModel: TutorialViewModel = viewModel()
         val navController = rememberNavController()
+
+        val isLoading by usuarioViewModel.isLoading.collectAsState()
+        val userData by usuarioViewModel.userData.collectAsState()
 
         // Escuchar eventos de navegación centralizados de MainViewModel
         LaunchedEffect(key1 = Unit) {
@@ -61,66 +67,71 @@ fun AppNavigation() {
         Scaffold(
             modifier = Modifier.fillMaxSize()
         ) { innerPadding ->
-            NavHost(
-                navController = navController,
-                startDestination = Screen.Landing.route,
-                modifier = Modifier.padding(paddingValues = innerPadding),
-                // 1. Animación al ENTRAR a una pantalla nueva (se desplaza de derecha a izquierda)
-                enterTransition = {
-                    slideIntoContainer(
-                        towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                        animationSpec = tween(400)
-                    ) + fadeIn(animationSpec = tween(400))
-                },
-                // 2. Animación de la pantalla que SALE (se desvanece suavemente hacia la izquierda)
-                exitTransition = {
-                    slideOutOfContainer(
-                        towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                        animationSpec = tween(400)
-                    ) + fadeOut(animationSpec = tween(400))
-                },
-                // 3. Animación al VOLVER ATRÁS (la pantalla anterior entra desplazándose de izquierda a derecha)
-                popEnterTransition = {
-                    slideIntoContainer(
-                        towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                        animationSpec = tween(400)
-                    ) + fadeIn(animationSpec = tween(400))
-                },
-                // 4. Animación de la pantalla actual al VOLVER ATRÁS (sale hacia la derecha)
-                popExitTransition = {
-                    slideOutOfContainer(
-                        towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                        animationSpec = tween(400)
-                    ) + fadeOut(animationSpec = tween(400))
+            if (isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
                 }
-            ) {
-                composable(route = Screen.Landing.route) {
-                    LandingScreen(navController = navController, viewModel = viewModel)
-                }
-                composable(route = Screen.Home.route) {
-                    HomeScreen(navController = navController, viewModel = viewModel)
-                }
-                composable(route = Screen.Profile.route) {
-                    ProfileScreen(navController = navController, viewModel = viewModel)
-                }
-                composable(route = Screen.Settings.route) {
-                    SettingsScreen(navController = navController, viewModel = viewModel)
-                }
-                composable(route = Screen.Registro.route) {
-                    RegistroScreen(navController = navController, viewModel = usuarioViewModel)
-                }
-                composable(route = Screen.Resumen.route) {
-                    ResumenScreen(usuarioViewModel = usuarioViewModel, mainViewModel = viewModel)
-                }
-                composable(route = Screen.Tutorial.route) {
-                    TutorialScreen(
-                        navController = navController,
-                        viewModel = viewModel,
-                        tutorialViewModel = tutorialViewModel
-                    )
-                }
-                composable(route = Screen.Estado.route) {
-                    PantallaEstado()
+            } else {
+                NavHost(
+                    navController = navController,
+                    startDestination = if (userData != null) Screen.Home.route else Screen.Landing.route,
+                    modifier = Modifier.padding(paddingValues = innerPadding),
+                    // 1. Animación al ENTRAR a una pantalla nueva (se desplaza de derecha a izquierda)
+                    enterTransition = {
+                        slideIntoContainer(
+                            towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                            animationSpec = tween(400)
+                        ) + fadeIn(animationSpec = tween(400))
+                    },
+                    // 2. Animación de la pantalla que SALE (se desvanece suavemente hacia la izquierda)
+                    exitTransition = {
+                        slideOutOfContainer(
+                            towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                            animationSpec = tween(400)
+                        ) + fadeOut(animationSpec = tween(400))
+                    },
+                    // 3. Animación al VOLVER ATRÁS (la pantalla anterior entra desplazándose de izquierda a derecha)
+                    popEnterTransition = {
+                        slideIntoContainer(
+                            towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                            animationSpec = tween(400)
+                        ) + fadeIn(animationSpec = tween(400))
+                    },
+                    // 4. Animación de la pantalla actual al VOLVER ATRÁS (sale hacia la derecha)
+                    popExitTransition = {
+                        slideOutOfContainer(
+                            towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                            animationSpec = tween(400)
+                        ) + fadeOut(animationSpec = tween(400))
+                    }
+                ) {
+                    composable(route = Screen.Landing.route) {
+                        LandingScreen(navController = navController, viewModel = viewModel)
+                    }
+                    composable(route = Screen.Home.route) {
+                        HomeScreen(navController = navController, viewModel = viewModel)
+                    }
+                    composable(route = Screen.Profile.route) {
+                        ProfileScreen(navController = navController, viewModel = viewModel, usuarioViewModel = usuarioViewModel)
+                    }
+                    composable(route = Screen.Settings.route) {
+                        SettingsScreen(navController = navController, viewModel = viewModel)
+                    }
+                    composable(route = Screen.Registro.route) {
+                        RegistroScreen(navController = navController, viewModel = usuarioViewModel)
+                    }
+                    composable(route = Screen.Tutorial.route) {
+                        TutorialScreen(
+                            navController = navController,
+                            viewModel = viewModel,
+                            tutorialViewModel = tutorialViewModel
+                        )
+                    }
                 }
             }
         }
