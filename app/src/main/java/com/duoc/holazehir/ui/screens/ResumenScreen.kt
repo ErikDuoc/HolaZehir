@@ -37,7 +37,7 @@ fun ResumenScreen(
             style = MaterialTheme.typography.headlineMedium
         )
         Text(
-            text = "Tus datos son los siguientes.",
+            text = "Tus datos son los siguientes:",
             fontSize = 18.sp
         )
         Spacer(modifier = Modifier.height(height = 12.dp))

@@ -1,5 +1,6 @@
 package com.duoc.holazehir.ui.components
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -10,6 +11,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.duoc.holazehir.navigation.Screen
 
 @Composable
@@ -19,7 +21,7 @@ fun AppNavigationBar(
     modifier: Modifier = Modifier,
     items: List<Screen> = listOf(Screen.Home, Screen.Landing, Screen.Profile)
 ) {
-    NavigationBar(modifier = modifier) {
+    NavigationBar(modifier = modifier, windowInsets = WindowInsets(0.dp)) {
         items.forEach { screen ->
             val selected = currentScreen == screen
             NavigationBarItem(
