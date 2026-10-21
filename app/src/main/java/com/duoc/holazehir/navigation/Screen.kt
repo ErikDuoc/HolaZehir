@@ -11,11 +11,4 @@ sealed class Screen(val route: String, val name: String? = null) {
     data object Registro : Screen(route = "registro", name = "Registro")
 
     data object Tutorial : Screen(route = "tutorial_page", name = "Tutorial")
-
-    // Ejemplo de una ruta con argumentos (Opcional)
-    data class Detail(val itemId: String) : Screen(route = "detail_page/$itemId") {
-        fun buildRoute(): String {
-            return route.replace("{itemId}", itemId)
-        }
-    }
 }

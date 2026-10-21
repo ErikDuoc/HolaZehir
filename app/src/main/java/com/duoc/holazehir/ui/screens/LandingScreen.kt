@@ -18,10 +18,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.duoc.holazehir.R
 import com.duoc.holazehir.navigation.Screen
-import com.duoc.holazehir.ui.components.AppNavigationBar
-import com.duoc.holazehir.ui.theme.HomeScreenDeprecado
 import com.duoc.holazehir.viewmodel.MainViewModel
 
+@Suppress("UNUSED_PARAMETER")
 @Composable
 fun LandingScreen(
     navController: NavController = rememberNavController(),
