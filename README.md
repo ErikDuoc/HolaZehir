@@ -1,6 +1,6 @@
-# HolaZehir 🇹🇷📱
+# HolaSehir 🇹🇷📱
 
-**HolaZehir** es una aplicación móvil nativa para Android diseñada para la enseñanza interactiva del idioma turco. Desarrollada completamente con **Jetpack Compose**, sigue las mejores prácticas de la industria con arquitectura **MVVM**, gestión de estado reactiva con `StateFlow`, navegación centralizada y persistencia local de preferencias mediante **Jetpack DataStore**.
+**HolaSehir** es una aplicación móvil nativa para Android diseñada para la enseñanza interactiva del idioma turco. Desarrollada completamente con **Jetpack Compose**, sigue las mejores prácticas de la industria con arquitectura **MVVM**, gestión de estado reactiva con `StateFlow`, navegación centralizada y persistencia local de preferencias mediante **Jetpack DataStore**.
 
 ---
 
