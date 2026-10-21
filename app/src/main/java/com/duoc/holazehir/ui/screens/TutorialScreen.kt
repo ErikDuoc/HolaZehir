@@ -70,7 +70,7 @@ fun TutorialScreenContent(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Tutorial - Lección 1") },
+                title = { Text("Nivel 1: Objetos en Turco") },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(

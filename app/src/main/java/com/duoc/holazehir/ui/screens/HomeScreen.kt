@@ -83,12 +83,16 @@ fun HomeScreenContent(
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White
                 ),
-                contentPadding = PaddingValues(vertical = 20.dp, horizontal = 40.dp)
+                contentPadding = PaddingValues(vertical = 20.dp, horizontal = 120.dp)
 
             ) {
                 Text(
-                    text = "Iniciar Llección 1",
-                    color = MaterialTheme.colorScheme.primary)
+                    text = "Iniciar",
+                    color = MaterialTheme.colorScheme.primary,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
             }
         }
     }
